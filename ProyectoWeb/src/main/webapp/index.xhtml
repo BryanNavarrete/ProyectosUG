@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Sistema Calificacion</title>
+</h:head>
+<h:body>
+	<p:growl id="msg" autoUpdate="true"></p:growl>
+	<h:form>
+		<center>
+			<h1>CONSULTA DE NOTAS POR PERIODO LECTIVO</h1>
+		</center>
+
+		<p:fieldset legend="Datos del Estudiante"
+			style="height: 120px; width:120px">
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="4">
+					<p:outputLabel value="Cédula: " />
+					<p:inputText id="txtCedula"
+						value="#{indexController.nota.cod_estudiante}" required="true"
+						requiredMessage="El número de Cédula es obligatorio"
+						maxlength="10" size="10" />
+					<p:message for="txtCedula"></p:message>
+					<p:column />
+
+					<p:outputLabel value="Periodo: " />
+					<p:selectOneMenu id="cboPeriodo"
+						value="#{indexController.periodo.cod_periodo}" style="width:200px"
+						required="true" effect="fade">
+						<f:selectItems value="#{indexController.listPeriodos}" var="n"
+							itemLabel="#{n.nom_periodo}" itemValue="#{n.cod_periodo}" />
+					</p:selectOneMenu>
+					<p:message for="cboPeriodo"></p:message>
+					<p:commandButton icon="ui-icon-search" value="Buscar"
+						actionListener="#{indexController.buscar()}" update="dtNota">
+					</p:commandButton>
+				</h:panelGrid>
+
+				<p:column></p:column>
+			</h:panelGrid>
+		</p:fieldset>
+		<p:separator></p:separator>
+		<p:dataTable id="dtNota" value="#{indexController.listNotas}" var="p"
+			scrollable="true" scrollHeight="250">
+
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column rowspan="2" headerText="Materias" width="450" />
+					<p:column colspan="3" headerText="Primer Parcial" />
+					<p:column colspan="3" headerText="Segundo Parcial" />
+				</p:row>
+				<p:row>
+					<p:column headerText="Nota Acad." />
+					<p:column headerText="Exámen" />
+					<p:column headerText="Promd. Total" />
+					<p:column headerText="Nota Acad." />
+					<p:column headerText="Exámen" />
+					<p:column headerText="Promd. Total" />
+				</p:row>
+			</p:columnGroup>
+
+			<p:column>
+				<p:outputLabel value="#{p.nom_materia}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.primer_academica}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.primer_evaluacion}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.primer_promedio}" style="color: black" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.segundo_academica}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.segundo_evaluacion}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{p.segundo_promedio}" style="color: black" />
+			</p:column>
+
+			<f:facet name="footer">
+            		INTEGRANTES: Navarrete Bryan - Sánchez Joel - Savedra Jackson
+        		</f:facet>
+		</p:dataTable>
+
+	</h:form>
+</h:body>
+</html>
